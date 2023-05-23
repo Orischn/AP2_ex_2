@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import ChatBlock from "../chatBlock/chatBlock";
 import noContactChosenPic from "./noContactChosenPic.jpg";
 
-function ChatScreen({ selectedContact, send, setLoggedIn }) {
+function ChatScreen({ selectedContact, send }) {
   const navigate = useNavigate();
   const logout = () => {
-    setLoggedIn(false);
+    
     navigate('/loginPage');
   }
 
