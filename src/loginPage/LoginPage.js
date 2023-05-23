@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import InfoInput from "../infoInput/InfoInput";
 
-function LoginPage({ setToken }) {
+function LoginPage({ setToken, setMyUsername }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +31,7 @@ function LoginPage({ setToken }) {
     return <InfoInput {...data} key={key} />;
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setUsernameError('');
     setPasswordError('');
     setError('');
@@ -45,19 +45,28 @@ function LoginPage({ setToken }) {
       setPasswordError('Password is required!');
       return;
     }
-    const user = users.find((user) => {
-      if (user.username === username) {
-        if (user.password === password) {
-          setLoggedIn(true);
-          setMe(user);
-          return true;
-        }
-      }
-      return false;
-    });
-    if (!user) {
-      setError('username or password are incorrect!');
+    const res = await fetch('http://localhost:5000/api/Tokens', {
+      'method': 'post',
+      'headers': {
+        'Content-Type': 'application/json',
+      },
+      'body': JSON.stringify({
+        "username": username,
+        "password": password,
+      })
+    })
+
+    if (res.status === 404) {
+      res.text().then((error) => {
+        setError(error);
+      });
       return;
+    }
+    else if (res.status === 200) {
+      res.text().then((token) => {
+        setToken(token);
+      });
+      setMyUsername(username);
     }
     navigate('/chatPage');
   }
@@ -73,8 +82,8 @@ function LoginPage({ setToken }) {
               <input type="submit" className="btn btn-primary submit" value="Login" />
               {error &&
                 <span className="alert alert-danger w-50" role="alert">
-                {error}
-              </span>}
+                  {error}
+                </span>}
             </div>
             <div className="col-5 text-white">
               Not registered? <Link to="/" className="card-link">Click here</Link> to register
