@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import InfoInput from "../infoInput/InfoInput";
 
-function LoginPage({ users, setLoggedIn, setMe }) {
+function LoginPage({ setToken }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
