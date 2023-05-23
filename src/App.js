@@ -5,7 +5,7 @@ import RegisterPage from './registerPage/RegisterPage';
 
 function App() {
     const [token, setToken] = useState('');
-    const [myUsername, setMyUsername] = useState(null);
+    const [myUsername, setMyUsername] = useState('');
     return (
         <BrowserRouter>
             <Routes>
