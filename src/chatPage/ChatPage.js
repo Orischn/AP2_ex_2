@@ -63,7 +63,7 @@ function ChatPage({ token, setToken, myUsername }) {
             <AddContactResult contacts={contactsList} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />
           </div>
         </div>
-        <ChatScreen selectedContact={selectedContact} send={send} />
+        <ChatScreen selectedContact={selectedContact} send={send} setToken={setToken} />
       </div>
     </div>
   );
