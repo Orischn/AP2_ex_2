@@ -3,7 +3,7 @@ import AddContact from '../addContact/AddContact';
 import AddContactResult from '../addContactResult/AddContactResult';
 import ChatScreen from '../chatScreen/ChatScreen';
 
-function ChatPage({ users, setLoggedIn, me }) {
+function ChatPage({ token }) {
   const [registered, setRegistered] = useState([]);
   const [contactsList, setContactsList] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);

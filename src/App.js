@@ -11,8 +11,8 @@ function App() {
                 <Route path='/' element={<RegisterPage />} />
                 <Route path='/loginPage' element={<LoginPage setToken={setToken} />} />
                 <Route path='/chatPage' element={ !token ?
-                <ChatPage /> :
-                <LoginPage />} />
+                <ChatPage token={token} /> :
+                <LoginPage setToken={setToken} />} />
             </Routes>
         </BrowserRouter>
     )
