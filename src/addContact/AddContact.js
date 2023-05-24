@@ -1,41 +1,72 @@
 import { useRef, useState } from "react";
 
-function AddContact({ addContact, registered, me }) {
-    const addBar = useRef(null);
-    const [addedContacts, setAddedContacts] = useState([]);
+async function AddContact({ addContact, registered, me }) {
 
-    const add = function (e) {
+
+    const addBar = useRef(null);
+    // const [addedContacts, setAddedContacts] = useState([]);
+
+    const add = async function (e) {
         e.preventDefault(); // Prevent the default form submission
         const contactIdentifier = addBar.current.value.trim();
 
-        if (contactIdentifier !== "") {
-            var existingContact = registered.find(
-                (register) => {
-                    return register.username.toLowerCase() === contactIdentifier.toLowerCase();
-                }
-            );
-            if (existingContact) {
-                if (existingContact.username !== me.username) {
-                    existingContact = {...existingContact, messages: []};
-                    const isContactAlreadyAdded = addedContacts.some(
-                        (contact) => contact.username === existingContact.username
-                    );
-                    if (!isContactAlreadyAdded) {
-                        addContact(existingContact);
-                        setAddedContacts((prevContacts) => [...prevContacts, existingContact]);
-                    } else {
-                        // Show an error message: Contact already added
-                    }
-                } else {
-                    // Show an error message: You cant add yourself.
-                }
-            } else {
-                // Show an error message: No such person in registered array
-            }
+        const res = await fetch('http://localhost:5000/api/Chats', {
+            'method': 'post',
+            'headers': {
+              'Content-Type': 'application/json',
+            },
+            'body': JSON.stringify({
+              "username": contactIdentifier,
+            })
+          })
+          if (res.status === 409) { //duplicate
+              //do something
+          }
+          else if (res.status === 404) { //no such user
+            res.text().then((error) => {
+              setError(error);
+            });
+            return;
+          }
+          else if (res.status === 200) {
+            res.text().then((token) => {
+              setToken(token);
+            });
+            setMyUsername(username);
+          }
+
+
+
+
+
+        // if (contactIdentifier !== "") {
+        //     var existingContact = registered.find(
+        //         (register) => {
+        //             return register.username.toLowerCase() === contactIdentifier.toLowerCase();
+        //         }
+        //     );
+        //     if (existingContact) {
+        //         if (existingContact.username !== me.username) {
+        //             existingContact = {...existingContact, messages: []};
+        //             const isContactAlreadyAdded = addedContacts.some(
+        //                 (contact) => contact.username === existingContact.username
+        //             );
+        //             if (!isContactAlreadyAdded) {
+        //                 addContact(existingContact);
+        //                 setAddedContacts((prevContacts) => [...prevContacts, existingContact]);
+        //             } else {
+        //                 // Show an error message: Contact already added
+        //             }
+        //         } else {
+        //             // Show an error message: You cant add yourself.
+        //         }
+        //     } else {
+        //         // Show an error message: No such person in registered array
+        //     }
 
             addBar.current.value = ""; // Clear the input field after adding the contact
         }
-    };
+    
 
     return (
         <>

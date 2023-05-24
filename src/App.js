@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginPage from './loginPage/LoginPage';
 import RegisterPage from './registerPage/RegisterPage';
+import ChatPage from './chatPage/ChatPage'
 
 function App() {
     const [token, setToken] = useState('');
