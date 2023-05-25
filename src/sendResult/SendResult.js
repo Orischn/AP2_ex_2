@@ -8,7 +8,7 @@ function SendResult({ token, me, latestMessage, contact }) {
   const [messageList, setMessageList] = useState([]);
   useEffect(() => {
       getMessages();
-  }, [latestMessage]);
+  }, [latestMessage, contact]);
 
   const getMessages = async function () {
     const res = await fetch(`http://localhost:5000/api/Chats/${contact.id}/Messages`, {

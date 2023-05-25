@@ -1,10 +1,7 @@
-import { useState } from "react";
 import SendMyMessage from "../sendMyMessage/SendMyMessage";
 import SendResult from "../sendResult/SendResult";
 
-function ChatBlock({ contact, logout, token, me }) {
-
-    const [latestMessage, setLatestMessage] = useState('');
+function ChatBlock({ contact, logout, token, me, latestMessage, setLatestMessage }) {
 
     return (
         <>
@@ -12,7 +9,7 @@ function ChatBlock({ contact, logout, token, me }) {
                 <div className="d-flex justify-content-between align-items-center w-100">
                     <div className="d-flex align-items-center">
                         <img className="ms-3 rounded-circle" src={contact.profilePic} />
-                        <b className="ms-2 text-white-50">{contact.dName}</b>
+                        <b className="ms-2 text-white-50">{contact.displayName}</b>
                     </div>
                     <button className="btn btn-danger" onClick={logout}>logout</button>
                 </div>
