@@ -1,20 +1,20 @@
 import Clock from "../clock/Clock";
 
-function Contact({ user, selectedContact, setSelectedContact }) {
+function Contact({ chat, selectedContact, setSelectedContact }) {
     return (
-        <li key={user.id}
-            className={`list-group-item contact container ${selectedContact && selectedContact.username === username ? 'active' : ''}`}
-            onClick={() => setSelectedContact(user)}>
+        <li key={chat.id}
+            className={`list-group-item contact container ${selectedContact && selectedContact.user.username === chat.user.username ? 'active' : ''}`}
+            onClick={() => setSelectedContact(chat)}>
             <div className="row">
                 <div className="col-2">
-                    <img className="rounded-circle" src={user.user.profilePic} />
+                    <img className="rounded-circle" src={chat.user.profilePic} />
                 </div>
                 <div className="col-10">
-                    <b className="text-white w-100">{user.user.displayName}</b>
-                    <span className="badge date">{user.lastMessage ? user.lastMessage.created : ''}</span>
+                    <b className="text-white w-100">{chat.user.displayName}</b>
+                    <span className="badge date">{chat.lastMessage ? chat.lastMessage.created : ''}</span>
                     <br />
                     <span className="text-opacity-50 text-white lastMessage">
-                        {user.lastMessage ? user.lastMessage.content : ''}
+                        {chat.lastMessage ? chat.lastMessage.content : ''}
                     </span>
                 </div>
             </div>

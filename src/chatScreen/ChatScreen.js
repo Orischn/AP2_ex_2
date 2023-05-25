@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import ChatBlock from "../chatBlock/chatBlock";
 import noContactChosenPic from "./noContactChosenPic.jpg";
 
-function ChatScreen({ selectedContact, send, setToken }) {
+function ChatScreen({ selectedContact, setToken, me, token }) {
   const navigate = useNavigate();
   const logout = () => {
     setToken('');
@@ -12,7 +12,7 @@ function ChatScreen({ selectedContact, send, setToken }) {
   return (
     <div id="chatBlock" className="col-8">
       {selectedContact ? (
-        <ChatBlock contact={selectedContact} send={send} logout={logout} />
+        <ChatBlock token={token} me={me} contact={selectedContact} logout={logout} />
       ) : (
         <div style={{ position: "relative" }}>
           <button style={{ position: "absolute", top: 8, right: 5 }} className="btn btn-danger" onClick={logout}>logout</button>

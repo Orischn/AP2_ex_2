@@ -1,12 +1,12 @@
 import Clock from "../clock/Clock";
 
-function MyMessage({content}) {
+function MyMessage({message}) {
     return (
         <div dir="rtl">
             <div className="myMessage">
-                {content}
+                {message.content}
                 <br />
-                <span id="textTime" className="badge text-opacity-50"><Clock messages={[]}/></span>
+                <span id="textTime" className="badge text-opacity-50">{message.created}</span>
             </div>
         </div>
     );

@@ -1,7 +1,11 @@
+import { useState } from "react";
 import SendMyMessage from "../sendMyMessage/SendMyMessage";
 import SendResult from "../sendResult/SendResult";
 
-function ChatBlock({ contact, send, logout }) {
+function ChatBlock({ contact, logout, token, me }) {
+
+    const [latestMessage, setLatestMessage] = useState('');
+
     return (
         <>
             <div id="me" className="d-flex align-items-center w-100">
@@ -14,9 +18,9 @@ function ChatBlock({ contact, send, logout }) {
                 </div>
             </div>
             <div id="chat" className="w-100">
-                <SendResult messages={contact.messages} />
+                <SendResult token={token} contact={contact} me={me} latestMessage={latestMessage} />
             </div>
-            <SendMyMessage sendMessage={send} contact={contact} />
+            <SendMyMessage setLatestMessage={setLatestMessage} token={token} contact={contact} />
 
         </>
     );

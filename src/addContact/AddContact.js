@@ -19,9 +19,11 @@ function AddContact({ addContact, registered, me, token, setLatestContact }) {
             })
 
         })
+        
         if (res.status === 409) { //duplicate
             //do something
-            return
+            // return
+            
         }
         else if (res.status === 404) { //no such user
             // res.text().then((error) => {

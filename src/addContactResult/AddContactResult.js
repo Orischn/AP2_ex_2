@@ -11,7 +11,7 @@ function AddContactResult({ contacts, selectedContact, setSelectedContact, token
     const [contactsList, setContactsList] = useState([]);
     useEffect(() => {
         getContactsList();
-    }, [latestContact, filter]);
+    }, [latestContact, filter, selectedContact]);
 
     const getContactsList = async () => {
         const res = await fetch('http://localhost:5000/api/Chats', {
@@ -21,14 +21,11 @@ function AddContactResult({ contacts, selectedContact, setSelectedContact, token
                 'Authorization': `Bearer ${token}`,
             },
         });
-        console.log(res.status);
         if (res.status === 200) {
             res.text().then((contacts) => {
-                console.log(JSON.parse(contacts));
                 setContactsList(JSON.parse(contacts).map((contact, key) => {
-                    return <Contact user={contact} key={key} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />
+                    return <Contact chat={contact} key={key} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />
                 }));
-                console.log(contactsList);
             });
         }
 

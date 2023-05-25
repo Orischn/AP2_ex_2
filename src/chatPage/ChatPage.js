@@ -33,19 +33,22 @@ function ChatPage({ token, setToken, myUsername }) {
     setContactsList([...contactsList, { ...contact }]);
   }
 
-  const send = function (message) {
-    if (selectedContact) {
-      const updatedMessages = [...(selectedContact.messages || []), message];
-      const updatedContacts = contactsList.map((contact) => {
-        if (contact.username === selectedContact.username) {
-          setSelectedContact({ ...contact, messages: updatedMessages })
-          return { ...selectedContact, messages: updatedMessages };
-        }
-        return contact;
-      });
-      setContactsList(updatedContacts);
-    }
-  };
+  
+
+
+  // const send = function (message) {
+  //   if (selectedContact) {
+  //     const updatedMessages = [...(selectedContact.messages || []), message];
+  //     const updatedContacts = contactsList.map((contact) => {
+  //       if (contact.username === selectedContact.username) {
+  //         setSelectedContact({ ...contact, messages: updatedMessages })
+  //         return { ...selectedContact, messages: updatedMessages };
+  //       }
+  //       return contact;
+  //     });
+  //     setContactsList(updatedContacts);
+  //   }
+  // };
   
   return (
     <div id="window" className="container">
@@ -65,7 +68,7 @@ function ChatPage({ token, setToken, myUsername }) {
             <AddContactResult latestContact={latestContact} token={token} contacts={contactsList} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />
           </div>
         </div>
-        <ChatScreen selectedContact={selectedContact} send={send} setToken={setToken} />
+        <ChatScreen token={token} me={me} selectedContact={selectedContact} setToken={setToken} />
       </div>
     </div>
   );
