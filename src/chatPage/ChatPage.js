@@ -7,6 +7,7 @@ function ChatPage({ token, setToken, myUsername }) {
   const [registered, setRegistered] = useState([]);
   const [contactsList, setContactsList] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
+  const [latestContact, setLatestContact] = useState(null);
   const [me, setMe] = useState({});
   useEffect(() => {
     getMe();
@@ -20,6 +21,7 @@ function ChatPage({ token, setToken, myUsername }) {
         'Authorization': `Bearer ${token}`,
       },
     });
+    
     if (res.status === 200) {
       res.text().then((user) => {
         setMe(JSON.parse(user));
@@ -50,17 +52,17 @@ function ChatPage({ token, setToken, myUsername }) {
       <div className="row">
         <div id="contactBlock" className="col-4">
           <div id="me" className="d-flex align-items-center w-100" >
-            <script>{console.log(me)},
+            {/* <script>{console.log(me)},
             {console.log(me.profilePic)},
-            {console.log(me.displayName)}</script>
+            {console.log(me.displayName)}</script> */}
             <img className="ms-3 rounded-circle" src={me.profilePic} />
             <b className="ms-2 w-100 text-white-50">{me.displayName}</b>
-            <AddContact addContact={add} registered={registered} me={me} />
+            <AddContact setLatestContact={setLatestContact} addContact={add} registered={registered} me={me} token={token} />
           </div>
           <div className="d-flex align-items-center">
           </div>
           <div>
-            <AddContactResult contacts={contactsList} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />
+            <AddContactResult latestContact={latestContact} token={token} contacts={contactsList} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />
           </div>
         </div>
         <ChatScreen selectedContact={selectedContact} send={send} setToken={setToken} />

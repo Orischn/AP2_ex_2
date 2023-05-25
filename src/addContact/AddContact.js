@@ -1,43 +1,42 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-async function AddContact({ addContact, registered, me }) {
-
+function AddContact({ addContact, registered, me, token, setLatestContact }) {
 
     const addBar = useRef(null);
-    // const [addedContacts, setAddedContacts] = useState([]);
+    //const [addedContacts, setAddedContacts] = useState({});
 
     const add = async function (e) {
         e.preventDefault(); // Prevent the default form submission
         const contactIdentifier = addBar.current.value.trim();
-
         const res = await fetch('http://localhost:5000/api/Chats', {
             'method': 'post',
             'headers': {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             'body': JSON.stringify({
-              "username": contactIdentifier,
+                "username": contactIdentifier,
             })
-          })
-          if (res.status === 409) { //duplicate
-              //do something
-          }
-          else if (res.status === 404) { //no such user
-            res.text().then((error) => {
-              setError(error);
-            });
+
+        })
+        if (res.status === 409) { //duplicate
+            //do something
+            return
+        }
+        else if (res.status === 404) { //no such user
+            // res.text().then((error) => {
+            //     setError(error);
+            // });
             return;
-          }
-          else if (res.status === 200) {
-            res.text().then((token) => {
-              setToken(token);
+        }
+        else if (res.status === 200) {
+            res.text().then((contact) => {
+                setLatestContact(contact)
             });
-            setMyUsername(username);
-          }
-
-
-
-
+        }
+        else {
+            //other error
+        }
 
         // if (contactIdentifier !== "") {
         //     var existingContact = registered.find(
@@ -64,9 +63,8 @@ async function AddContact({ addContact, registered, me }) {
         //         // Show an error message: No such person in registered array
         //     }
 
-            addBar.current.value = ""; // Clear the input field after adding the contact
-        }
-    
+        addBar.current.value = ""; // Clear the input field after adding the contact
+    }
 
     return (
         <>

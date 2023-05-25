@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ChatPage from './chatPage/ChatPage';
 import LoginPage from './loginPage/LoginPage';
 import RegisterPage from './registerPage/RegisterPage';
-import ChatPage from './chatPage/ChatPage'
+import chatPage from './chatPage/ChatPage'
 
 function App() {
     const [token, setToken] = useState('');

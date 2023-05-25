@@ -145,7 +145,6 @@ function RegisterPage({ users, setUsers }) {
             "profilePic" : img,
             })
         })
-        
         if (res.status === 409) {
             setUsernameError('User already exists');
             return;

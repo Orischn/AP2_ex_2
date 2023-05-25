@@ -55,7 +55,6 @@ function LoginPage({ setToken, setMyUsername }) {
         "password": password,
       })
     })
-
     if (res.status === 404) {
       res.text().then((error) => {
         setError(error);
