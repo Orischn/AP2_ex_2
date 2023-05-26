@@ -51,7 +51,7 @@ function RegisterPage({ users, setUsers }) {
         return <InfoInput {...data} key={key} />;
     })
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         setUsernameError('');
         setPasswordError('');
         setVerifyPasswordError('');
@@ -95,11 +95,6 @@ function RegisterPage({ users, setUsers }) {
             return;
         }
 
-        if (users.map((user) => { return user.username }).includes(username)) {
-            setUsernameError('Username already exists!');
-            return;
-        }
-
         const passwordRegex = new RegExp('^[a-zA-Z1-9!*]+$')
         if (!passwordRegex.test(password)) {
             setPasswordError('Password must contain only letters digits or !/*');
@@ -139,7 +134,21 @@ function RegisterPage({ users, setUsers }) {
             setDisplayNameError('display name must contain only letters');
             return;
         }
-        setUsers([...users, { "username": username, "password": password, "displayName": displayName, "profilePic": img }])
+        const res = await fetch('http://localhost:5000/api/Users', {
+            'method' : 'post',
+            'headers' : {
+                'Content-Type' : 'application/json',
+            },
+            'body' : JSON.stringify({"username" : username,
+            "password" : password,
+            "displayName" : displayName,
+            "profilePic" : img,
+            })
+        })
+        if (res.status === 409) {
+            setUsernameError('User already exists');
+            return;
+        }
         navigate('/loginPage')
     };
 

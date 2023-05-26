@@ -1,18 +1,39 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
-function SendMyMessage({ sendMessage, contact }) {
+function SendMyMessage({ token, contact, setLatestMessage }) {
+
     const typeBar = useRef(null);
-    const send = function (e) {
-        e.preventDefault(); // Prevent the default form submission
-        if (typeBar.current.value.trim() !== '') {
-            sendMessage(typeBar.current.value);
-            typeBar.current.value = ''; // Clear the input field after sending the message
-        }
-    };
 
-    useEffect(() => {
+    const send = async function(e) {
+
+        e.preventDefault(); // Prevent the default form submission
+        if (typeBar.current.value.trim() === '') {
+            return;
+        }
+        const message = typeBar.current.value.trim();
+        const res = await fetch(`http://localhost:5000/api/Chats/${contact.id}/Messages`, {
+            'method': 'post',
+            'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            'body': JSON.stringify({
+                "msg": message,
+            })
+
+        })
+        
+        if(res.status !== 200) {
+            console.log(res.status);
+            return;
+        }
+        setLatestMessage(message);
         typeBar.current.value = '';
-    }, [contact])
+    }
+    
+    // useEffect(() => {
+    //     typeBar.current.value = '';
+    // }, [contact])
 
     return (
         <div className="d-flex">

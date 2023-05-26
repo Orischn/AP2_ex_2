@@ -1,7 +1,7 @@
 
 function SearchContact({ filter, setFilter }) {
     return (
-        <span>
+        <div>
             <span id="searchBar" className="input-group m-2">
                 <span className="input-group-text">
                     <button id="searchButton" type="submit"><i className="bi-search" /></button>
@@ -12,7 +12,7 @@ function SearchContact({ filter, setFilter }) {
                 />
             </span>
             <i id="filter" className="bi-filter mt-2" />
-        </span>
+        </div>
     );
 }
 

@@ -40,8 +40,8 @@ img {
 
 .otherMessage {
     position: relative;
-    top: 20px;
-    left: 20px;
+    top: 5%;
+    left: 5%;
     border-radius: 10px;
     background-color: #2a3238;
     color: white;
@@ -53,14 +53,14 @@ img {
 
 .myMessage {
     position: relative;
-    top: 20px;
-    right: 20px;
+    top: 5%;
+    right: 5%;
     border-radius: 10px;
     background-color: #014c31;
     color: white;
     width: fit-content;
     word-break: break-word;
-    max-width: 300px;
+    max-width: 20%;
     padding: 10px;
     margin: 1px;
 }
@@ -71,7 +71,7 @@ img {
 
 #me {
     background-color: rgb(48, 48, 48);
-    height: 10%;
+    height: 10vh;
 }
 
 #searchBar>input {
@@ -143,12 +143,25 @@ img {
     color: gray;
 }
 
+#chats {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    height: 80vh;
+}
+
+#chats::-webkit-scrollbar {
+    display: none;
+}
+
 #chat {
     background-image: url(backgroundPhoto.jpg);
-    overflow: hidden;
     overflow-y: scroll;
-    height: 79%;
-    max-height: 79%;
+    scroll-behavior: smooth;
+    height: 79vh;
+}
+
+#chat::-webkit-scrollbar {
+    display: none;
 }
 
 #chatBlock {
@@ -160,11 +173,10 @@ img {
 }
 
 #window {
-    max-width: 100%;
-    max-height: 100%;
+    overflow: hidden;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 
 .list-group-item.active {
@@ -177,7 +189,7 @@ img {
 
 .lastMessage {
     display:inline-block;
-    max-width: 90% !important;
+    max-width: 90vw !important;
     overflow: hidden !important;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
