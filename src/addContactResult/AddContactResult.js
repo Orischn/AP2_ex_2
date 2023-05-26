@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import Contact from "../contact/Contact";
 import SearchContact from "../searchContact/SearchContact";
 
-function AddContactResult({ contacts, selectedContact, setSelectedContact, token, latestContact, latestMessage }) {
+function AddContactResult({ selectedContact, setSelectedContact, token, latestContact, setLatestContact }) {
     const [filter, setFilter] = useState('');
     const [contactsList, setContactsList] = useState([]);
     useEffect(() => {
         getContactsList(filter);
-    }, [latestContact, filter, selectedContact, latestMessage]);
+        setLatestContact(null);
+    }, [latestContact, filter, selectedContact]);
 
     const getContactsList = async (filter) => {
         const res = await fetch('http://localhost:5000/api/Chats', {
@@ -47,9 +48,11 @@ function AddContactResult({ contacts, selectedContact, setSelectedContact, token
     return (
         <div>
             <SearchContact filter={filter} setFilter={setFilter} />
-            <ul className="list-group">
-                {contactsList}
-            </ul>
+            <div id="chats">
+                <ul className="list-group">
+                    {contactsList}
+                </ul>
+            </div>
         </div>
     );
 

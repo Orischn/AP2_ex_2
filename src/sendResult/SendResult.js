@@ -3,11 +3,12 @@ import MyMessage from "../myMessage/MyMessage";
 import OtherMessage from "../otherMessage/OtherMessage";
 
 
-function SendResult({ token, me, latestMessage, contact }) {
+function SendResult({ token, me, latestMessage, contact, setLatestMessage }) {
 
   const [messageList, setMessageList] = useState([]);
   useEffect(() => {
       getMessages();
+      setLatestMessage('');
   }, [latestMessage, contact]);
 
   const getMessages = async function () {

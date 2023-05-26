@@ -1,8 +1,12 @@
+import { useEffect, useRef } from "react";
 import SendMyMessage from "../sendMyMessage/SendMyMessage";
 import SendResult from "../sendResult/SendResult";
 
 function ChatBlock({ contact, logout, token, me, latestMessage, setLatestMessage }) {
-
+    const chat = useRef(null);
+    useEffect(() => {
+        chat.current.scrollTop = chat.current.scrollHeight;
+    }, [contact])
     return (
         <>
             <div id="me" className="d-flex align-items-center w-100">
@@ -14,8 +18,8 @@ function ChatBlock({ contact, logout, token, me, latestMessage, setLatestMessage
                     <button className="btn btn-danger" onClick={logout}>logout</button>
                 </div>
             </div>
-            <div id="chat" className="w-100">
-                <SendResult token={token} contact={contact} me={me} latestMessage={latestMessage} />
+            <div ref={chat} id="chat" className="w-100">
+                <SendResult token={token} contact={contact} me={me} latestMessage={latestMessage} setLatestMessage={setLatestMessage} />
             </div>
             <SendMyMessage setLatestMessage={setLatestMessage} token={token} contact={contact} />
 

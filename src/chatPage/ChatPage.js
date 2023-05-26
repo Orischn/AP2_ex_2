@@ -51,7 +51,7 @@ function ChatPage({ token, setToken, myUsername }) {
   // };
   
   return (
-    <div id="window" className="container">
+    <div id="window" className="container-fluid">
       <div className="row">
         <div id="contactBlock" className="col-4">
             <div id="me" className="d-flex align-items-center w-100">
@@ -60,7 +60,7 @@ function ChatPage({ token, setToken, myUsername }) {
               <AddContact setLatestContact={setUpdate} addContact={add}
               registered={registered} me={me} token={token} />
             </div>
-          <AddContactResult latestMessage={update} latestContact={update} token={token}
+          <AddContactResult latestContact={update} setLatestContact={setUpdate} token={token}
           contacts={contactsList} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />
         </div>
         <ChatScreen latestMessage={update} setLatestMessage={setUpdate}
