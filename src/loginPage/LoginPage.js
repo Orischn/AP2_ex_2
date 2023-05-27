@@ -61,7 +61,7 @@ function LoginPage({ setToken, setMyUsername }) {
       });
       return;
     }
-    else if (res.status === 200) {
+    else if (res.status === 201) {
       res.text().then((token) => {
         setToken(token);
       });

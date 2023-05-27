@@ -1,13 +1,20 @@
-import {getUser, postUser} from '../models/users.js'
+const { getUser, postUser } = require('../models/users.js');
 
 
-const addUser = (req, res) => {
-    res.status(postUser(req.body));
-    res.end();
+const addUser = async (req, res) => {
+    return res.status(await postUser(req.body)).end();
 }
 
-// const receiveUser = (req, res) => {
-//     res.send(getUser(req.body.username));
-// }
+const recieveUser = async (req, res) => {
+    const user = await getUser(req.params.username);
+    if (user === 401) {
+        return res.status(user).end();
+    } else {
+        return res.status(200).end(JSON.stringify(user));
+    }
+}
 
-export default addUser
+module.exports = {
+    addUser,
+    recieveUser,
+}
