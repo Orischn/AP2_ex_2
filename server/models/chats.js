@@ -27,7 +27,12 @@ async function getChats() {
         if (!res) {
             return 401;
         }
-        return res;
+        let allChats = [];
+
+        await res.forEach((chat) => {
+            allChats.push(chat);
+        });
+        return allChats;
     } catch (error) {
         return 500;
     } finally {
@@ -41,22 +46,30 @@ async function postChat(username) {
         const db = client.db('Whatsapp');
         const chats = db.collection('chats');
         const users = db.collection('users');
-        const existingUser = await users.findOne({ username: username });
+        const existingUser = await users.findOne(username);
         if (!existingUser) {
             return 400;
         }
-        const existingChat = await chats.findOne({ user: { 'username': username } });
+        const existingChat = await chats.findOne({
+            user: {
+                ...username,
+                displayName: existingUser.displayName,
+                profilePic: existingUser.profilePic
+            }
+        });
         if (existingChat) {
             return 409;
         }
-        await chats.insertOne({
+        const chat = {
             user: {
-                'username': username, displayName: existingUser.displayName,
+                ...username,
+                displayName: existingUser.displayName,
                 profilePic: existingUser.profilePic
             },
             lastMessage: null
-        });
-        return 201;
+        }
+        await chats.insertOne(chat);
+        return chat;
     } catch (error) {
         return 500;
     } finally {

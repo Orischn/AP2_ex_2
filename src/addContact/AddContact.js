@@ -31,7 +31,7 @@ function AddContact({ addContact, registered, me, token, setLatestContact }) {
             // });
             return;
         }
-        else if (res.status === 200) {
+        else if (res.status === 201) {
             res.text().then((contact) => {
                 setLatestContact(contact)
             });

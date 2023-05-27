@@ -23,7 +23,7 @@ const postToken = async (user) => {
         const db = client.db('Whatsapp');
         const users = db.collection('users');
         const existingUser = await users.findOne({
-            id: user.username,
+            username: user.username,
             password: user.password
         });
         if (!existingUser) {
