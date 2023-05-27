@@ -5,7 +5,7 @@ const addUser = async (req, res) => {
     return res.status(await postUser(req.body)).end();
 }
 
-const recieveUser = async (req, res) => {
+const receiveUser = async (req, res) => {
     const user = await getUser(req.params.username);
     if (user === 401) {
         return res.status(user).end();
@@ -16,5 +16,5 @@ const recieveUser = async (req, res) => {
 
 module.exports = {
     addUser,
-    recieveUser,
+    receiveUser,
 }

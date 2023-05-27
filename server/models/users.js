@@ -6,14 +6,13 @@ async function getUser(username) {
       await client.connect();
       const db = client.db('Whatsapp');
       const users = db.collection('users');
-      const res = await users.findOne({ id: username });
+      const res = await users.findOne({ username: username });
       if (!res) {
         return 401;
       }
       return res;
     } catch (error) {
-      console.error('Error in getUser:', error);
-      return 500; // Internal server error
+      return 500;
     } finally {
       client.close();
     }
@@ -24,12 +23,12 @@ async function postUser(user) {
         await client.connect();
         const db = client.db('Whatsapp');
         const users = db.collection('users');
-        const existingUser = await users.findOne({ id: user.username });
+        const existingUser = await users.findOne({ username: user.username });
         if (existingUser) {
           return 409;
         }
         await users.insertOne({
-          id: user.username,
+          username: user.username,
           password: user.password,
           displayName: user.displayName,
           profilePic: user.profilePic
