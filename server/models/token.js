@@ -7,7 +7,7 @@ const checkValidity = async (authorization) => {
     if (authorization) {
         const token = authorization.split(" ")[1];
         try {
-            const data = await jwt.verify(token, key);
+            await jwt.verify(token, key);
             return 200;
         } catch (err) {
             return 401;

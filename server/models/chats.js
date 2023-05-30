@@ -60,7 +60,10 @@ async function postChat(username) {
         if (existingChat) {
             return 409;
         }
+        let nextId = (await chats.stats()).count;
+        console.log(nextId);
         const chat = {
+            id: nextId ? (nextId + 1) : 1,
             user: {
                 ...username,
                 displayName: existingUser.displayName,
