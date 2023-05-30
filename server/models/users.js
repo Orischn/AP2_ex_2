@@ -6,11 +6,11 @@ async function getUser(username) {
       await client.connect();
       const db = client.db('Whatsapp');
       const users = db.collection('users');
-      const res = await users.findOne({ username: username });
-      if (!res) {
+      const user = await users.findOne({ username: username });
+      if (!user) {
         return 401;
       }
-      return res;
+      return {username: user.username, displayName: user.displayName, profilePic: user.profilePic};
     } catch (error) {
       return 500;
     } finally {

@@ -14,10 +14,11 @@ const checkToken = async (req, res, next) => {
 const signToken = async (req, res) => {
     const token = await postToken(req.body);
     if (token === 404) {
-        res.status(token).end('Incorrect username and/or password');
-    } else {
-        res.status(201).end(token);
+        return res.status(token).end('Incorrect username and/or password');
+    } else if (token === 500) {
+        return res.status(500).end("Internal server error, Please try again.");
     }
+    return res.status(201).end(token);
 }
 
 module.exports =  {
