@@ -1,12 +1,15 @@
 const { getChat, postChat, getChats, deleteChat } = require('../models/chats.js');
-
+const { getData } = require('../models/token');
 
 const addChat = async (req, res) => {
-    const chat = await postChat(req.body);
+    const me = await getData(req.headers.authorization)
+    const chat = await postChat(req.body, me);
     if (chat === 400) {
         return res.status(400).end("No such user.");
     } else if (chat === 409) {
         return res.status(409).end("A chat with this user already exists!")
+    } else if (chat === 403) {
+        return res.status(403).end("Thou shalt not speak with thyself")
     } else if (chat === 500) {
         return res.status(500).end();
     }

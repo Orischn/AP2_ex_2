@@ -40,8 +40,11 @@ async function getChats() {
     }
 }
 
-async function postChat(username) {
+async function postChat(username, me) {
     try {
+        if (me.username === username.username) {
+            return 403;
+        }
         await client.connect();
         const db = client.db('Whatsapp');
         const chats = db.collection('chats');
@@ -61,7 +64,6 @@ async function postChat(username) {
             return 409;
         }
         let nextId = (await chats.stats()).count;
-        console.log(nextId);
         const chat = {
             id: nextId ? (nextId + 1) : 1,
             user: {

@@ -38,7 +38,22 @@ const postToken = async (user) => {
     }
 }
 
+const getData = async (authorization) => {
+    if (authorization) {
+        const token = authorization.split(" ")[1];
+        try {
+            const data = await jwt.verify(token, key);
+            return data;
+        } catch (err) {
+            return 401;
+        }
+    } else {
+        return 403;
+    }
+}
+
 module.exports = {
     postToken,
     checkValidity,
+    getData,
 }
