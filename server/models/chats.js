@@ -34,6 +34,7 @@ async function getChats() {
         });
         return allChats;
     } catch (error) {
+        console.log('chats' + error);
         return 500;
     } finally {
         client.close();
@@ -71,6 +72,7 @@ async function postChat(username, me) {
                 displayName: existingUser.displayName,
                 profilePic: existingUser.profilePic
             },
+            messages: [],
             lastMessage: null
         }
         await chats.insertOne(chat);

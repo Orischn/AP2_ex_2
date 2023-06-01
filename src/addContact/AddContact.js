@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 function AddContact({ addContact, registered, me, token, setLatestContact }) {
 

@@ -16,7 +16,7 @@ const signToken = async (req, res) => {
     if (token === 404) {
         return res.status(token).end('Incorrect username and/or password');
     } else if (token === 500) {
-        return res.status(500).end("Internal server error, Please try again.");
+        return res.status(500).end();
     }
     return res.status(201).end(token);
 }

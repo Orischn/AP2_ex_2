@@ -55,18 +55,16 @@ function LoginPage({ setToken, setMyUsername }) {
         "password": password,
       })
     })
-    if (res.status === 404) {
+    if (res.status !== 201) {
       res.text().then((error) => {
         setError(error);
       });
       return;
     }
-    else if (res.status === 201) {
-      res.text().then((token) => {
-        setToken(token);
-      });
-      setMyUsername(username);
-    }
+    res.text().then((token) => {
+      setToken(token);
+    });
+    setMyUsername(username);
     navigate('/chatPage');
   }
   return (

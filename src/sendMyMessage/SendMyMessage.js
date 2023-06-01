@@ -22,11 +22,6 @@ function SendMyMessage({ token, contact, setLatestMessage }) {
             })
 
         })
-        
-        if(res.status !== 200) {
-            console.log(res.status);
-            return;
-        }
         setLatestMessage(message);
         typeBar.current.value = '';
     }
