@@ -1,4 +1,3 @@
-import Clock from "../clock/Clock";
 
 function Contact({ chat, selectedContact, setSelectedContact }) {
     return (

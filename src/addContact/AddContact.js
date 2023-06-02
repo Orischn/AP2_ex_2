@@ -1,12 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
-function AddContact({ addContact, registered, me, token, setLatestContact }) {
+function AddContact({ token, setLatestContact }) {
 
     const addBar = useRef(null);
-    //const [addedContacts, setAddedContacts] = useState({});
+    const [error, setError] = useState('');
+    const [isSuccessful, setIsSuccessful] = useState(false);
 
     const add = async function (e) {
         e.preventDefault(); // Prevent the default form submission
+        setError('');
         const contactIdentifier = addBar.current.value.trim();
         const res = await fetch('http://localhost:5000/api/Chats', {
             'method': 'post',
@@ -19,55 +21,27 @@ function AddContact({ addContact, registered, me, token, setLatestContact }) {
             })
 
         })
-        
-        if (res.status === 409) { //duplicate
-            //do something
-            // return
-            
-        }
-        else if (res.status === 404) { //no such user
-            // res.text().then((error) => {
-            //     setError(error);
-            // });
+
+        if (res.status !== 201) { //error
+            await res.text().then((errorMessage) => {
+                setError(errorMessage);
+            })
+            setIsSuccessful(false);
             return;
         }
-        else if (res.status === 200) {
-            res.text().then((contact) => {
-                setLatestContact(contact)
-            });
-        }
+        
         else {
-            //other error
+            await res.text().then((contact) => {
+                setLatestContact(contact);
+            });
+            setError("Added Successfully");
+            setIsSuccessful(true);
+            
+            addBar.current.value = ""; // Clear the input field after adding the contact
+            
         }
-
-        // if (contactIdentifier !== "") {
-        //     var existingContact = registered.find(
-        //         (register) => {
-        //             return register.username.toLowerCase() === contactIdentifier.toLowerCase();
-        //         }
-        //     );
-        //     if (existingContact) {
-        //         if (existingContact.username !== me.username) {
-        //             existingContact = {...existingContact, messages: []};
-        //             const isContactAlreadyAdded = addedContacts.some(
-        //                 (contact) => contact.username === existingContact.username
-        //             );
-        //             if (!isContactAlreadyAdded) {
-        //                 addContact(existingContact);
-        //                 setAddedContacts((prevContacts) => [...prevContacts, existingContact]);
-        //             } else {
-        //                 // Show an error message: Contact already added
-        //             }
-        //         } else {
-        //             // Show an error message: You cant add yourself.
-        //         }
-        //     } else {
-        //         // Show an error message: No such person in registered array
-        //     }
-
-        addBar.current.value = ""; // Clear the input field after adding the contact
+        
     }
-
     return (
         <>
             {/* Button trigger modal */}
@@ -87,8 +61,12 @@ function AddContact({ addContact, registered, me, token, setLatestContact }) {
                                 <input type="text" ref={addBar} className="form-control" placeholder="Contact's identifier" />
                             </div>
                             <div className="modal-footer">
+                                {error &&
+                                    <span className={`alert ${isSuccessful? "alert-success": "alert-danger"} w-50`} role="alert">
+                                        {error}
+                                    </span>}
                                 <button type="button" onClick={() => { addBar.current.value = '' }} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Add Contact</button>
+                                <button type="submit" className="btn btn-primary">Add Contact</button>
                             </div>
                         </form>
                     </div>

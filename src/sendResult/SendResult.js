@@ -22,6 +22,7 @@ function SendResult({ token, me, latestMessage, contact, setLatestMessage }) {
 
     if (res.status === 200) {
       res.text().then((messages) => {
+        console.log(messages);
         setMessageList(JSON.parse(messages).reverse().map((message, key) => {
           if (me.username === message.sender.username) {
             return <MyMessage message={message} key={key} />;
