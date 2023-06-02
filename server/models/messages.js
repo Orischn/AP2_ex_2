@@ -19,8 +19,10 @@ async function postMessage(message, chatId, me) {
                 $push: { messages: {
                     $each: [{ id: chatId, created: dateTime, sender: sender, content: message.msg }],
                     $position: 0
-                }}
+                }},
+                $set: { lastMessage: { id: chatId, created: dateTime, sender: sender, content: message.msg }}
             }
+
         )
         return 201;
     } catch (error) {

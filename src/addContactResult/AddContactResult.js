@@ -30,21 +30,7 @@ function AddContactResult({ selectedContact, setSelectedContact, token, latestCo
                 }));
             });
         }
-
-        // useEffect(() => {
-        //     setContactsList(contacts.filter((contact) => {
-        //         if (filter !== '') {
-        //             return contact.dName.toLowerCase().includes(filter.toLowerCase());
-        //         }
-        //         return true
-        //     }).map((contact, key) => {
-        //         return <Contact {...contact} key={key} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />
-        //     }));
-        // }, [filter, contacts, selectedContact])
-
-
     }
-    // getContactsList();
     return (
         <div>
             <SearchContact filter={filter} setFilter={setFilter} />
