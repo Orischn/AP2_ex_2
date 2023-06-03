@@ -6,14 +6,15 @@ function ChatBlock({ contact, logout, token, me, latestMessage, setLatestMessage
     const chat = useRef(null);
     useEffect(() => {
         chat.current.scrollTop = chat.current.scrollHeight;
-    }, [contact])
+        setLatestMessage(null);
+    }, [contact, latestMessage])
     return (
         <>
             <div id="me" className="d-flex align-items-center w-100">
                 <div className="d-flex justify-content-between align-items-center w-100">
                     <div className="d-flex align-items-center">
-                        <img className="ms-3 rounded-circle" src={contact.profilePic} />
-                        <b className="ms-2 text-white-50">{contact.displayName}</b>
+                        <img className="ms-3 rounded-circle" src={contact.user.profilePic} />
+                        <b className="ms-2 text-white-50">{contact.user.displayName}</b>
                     </div>
                     <button className="btn btn-danger" onClick={logout}>logout</button>
                 </div>

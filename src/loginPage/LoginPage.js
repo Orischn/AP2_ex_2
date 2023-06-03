@@ -78,7 +78,7 @@ function LoginPage({ setToken, setMyUsername }) {
             <div className="col-7">
               <input type="submit" className="btn btn-primary submit" value="Login" />
               {error &&
-                <span className="alert alert-danger w-50" role="alert">
+                <span className="alert alert-danger w-50 myError" role="alert">
                   {error}
                 </span>}
             </div>

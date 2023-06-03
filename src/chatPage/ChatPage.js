@@ -34,22 +34,6 @@ function ChatPage({ token, setToken, myUsername }) {
   }
 
   
-
-
-  // const send = function (message) {
-  //   if (selectedContact) {
-  //     const updatedMessages = [...(selectedContact.messages || []), message];
-  //     const updatedContacts = contactsList.map((contact) => {
-  //       if (contact.username === selectedContact.username) {
-  //         setSelectedContact({ ...contact, messages: updatedMessages })
-  //         return { ...selectedContact, messages: updatedMessages };
-  //       }
-  //       return contact;
-  //     });
-  //     setContactsList(updatedContacts);
-  //   }
-  // };
-  
   return (
     <div id="window" className="container-fluid">
       <div className="row">
