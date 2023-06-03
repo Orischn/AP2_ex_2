@@ -61,3 +61,9 @@ body{
   left: 435px;
   bottom: 30px
 }
+
+.myError {
+  font-size: 70%;
+  margin-left: 10px;
+  font-weight: bold;
+}
