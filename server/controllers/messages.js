@@ -1,7 +1,10 @@
 const { getMessages, postMessage } = require('../models/messages');
 const { getData } = require('../models/token');
+const { getUser } = require('../models/users');
 
 const sendMessage = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     const me =  await getData(req.headers.authorization);
     const chat = await postMessage(req.body, parseInt(req.params.id), me);
     if (chat === 500) {
@@ -11,7 +14,11 @@ const sendMessage = async (req, res) => {
 }
 
 const receiveMessages = async (req, res) => {
-    const messages = await getMessages(req.params.id);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    const data = await getData(req.headers.authorization)
+    const me = await getUser(data.username);
+    const messages = await getMessages(req.params.id, me);
     if (messages === 500) {
         return res.status(500).end();
     }

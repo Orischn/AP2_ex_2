@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser=require('body-parser'); 
 const app = express();
 const http = require('http')
 const server = http.createServer(app);
@@ -6,6 +7,7 @@ const server = http.createServer(app);
 // const io = new Server(server);
 // let sockets = [];
 
+app.use(bodyParser.json({limit: '5mb'}));
 app.use(express.json());
 app.use(express.static('public'));
 app.use(require('./routes/token'));

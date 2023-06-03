@@ -1,24 +1,31 @@
 const { MongoClient } = require('mongodb');
-const client = new MongoClient("mongodb://127.0.0.1:27017");
 
-async function getChat(id) {
+async function getChat(id, me) {
+    const client = new MongoClient("mongodb://127.0.0.1:27017");
     try {
         await client.connect();
-        const db = client.db('Whatsapp');
+        const db = await client.db('Whatsapp');
         const chats = db.collection('chats');
-        const res = await chats.findOne({ id: id });
-        if (!res) {
+        const chat = await chats.findOne({ id: id });
+        if (!chat) {
             return 401;
         }
-        return res;
+        return {
+            id: chat.id,
+            user: me.username === chat.users[0].username ? chat.users[1] : chat.users[0],
+            messages: chat.messages,
+            lastMessage: chat.lastMessage
+        }
     } catch (error) {
+        console.log('chats1' + error);
         return 500;
     } finally {
-        client.close();
+        await client.close();
     }
 }
 
-async function getChats() {
+async function getChats(me) {
+    const client = new MongoClient("mongodb://127.0.0.1:27017");
     try {
         await client.connect();
         const db = client.db('Whatsapp');
@@ -27,27 +34,34 @@ async function getChats() {
         if (!res) {
             return 401;
         }
-        let allChats = [];
-
+        var allChats = [];
         await res.forEach((chat) => {
-            allChats.push(chat);
+            if (chat.users.map((user) => { return user.username }).includes(me.username)) {
+                allChats.push({
+                    id: chat.id,
+                    user: me.username === chat.users[0].username ? chat.users[1] : chat.users[0],
+                    messages: chat.messages,
+                    lastMessage: chat.lastMessage
+                });
+            }
         });
         return allChats;
     } catch (error) {
-        console.log('chats' + error);
+        console.log('chats2' + error);
         return 500;
     } finally {
-        client.close();
+        await client.close();
     }
 }
 
 async function postChat(username, me) {
+    const client = new MongoClient("mongodb://127.0.0.1:27017");
     try {
         if (me.username === username.username) {
             return 403;
         }
         await client.connect();
-        const db = client.db('Whatsapp');
+        const db = await client.db('Whatsapp');
         const chats = db.collection('chats');
         const users = db.collection('users');
         const existingUser = await users.findOne(username);
@@ -55,11 +69,23 @@ async function postChat(username, me) {
             return 400;
         }
         const existingChat = await chats.findOne({
-            user: {
-                ...username,
-                displayName: existingUser.displayName,
-                profilePic: existingUser.profilePic
+            $or: [{
+                users: [me,
+                    {
+                        ...username,
+                        displayName: existingUser.displayName,
+                        profilePic: existingUser.profilePic
+                    }]
+            },
+            {
+                users: [
+                    {
+                        ...username,
+                        displayName: existingUser.displayName,
+                        profilePic: existingUser.profilePic
+                    }, me]
             }
+            ]
         });
         if (existingChat) {
             return 409;
@@ -67,11 +93,12 @@ async function postChat(username, me) {
         let nextId = (await chats.stats()).count;
         const chat = {
             id: nextId ? (nextId + 1) : 1,
-            user: {
-                ...username,
-                displayName: existingUser.displayName,
-                profilePic: existingUser.profilePic
-            },
+            users: [me,
+                {
+                    ...username,
+                    displayName: existingUser.displayName,
+                    profilePic: existingUser.profilePic
+                }],
             messages: [],
             lastMessage: null
         }
@@ -80,11 +107,12 @@ async function postChat(username, me) {
     } catch (error) {
         return 500;
     } finally {
-        client.close();
+        await client.close();
     }
 }
 
 async function deleteChat(id) {
+    const client = new MongoClient("mongodb://127.0.0.1:27017");
     try {
         await client.connect();
         const db = client.db('Whatsapp');
@@ -98,7 +126,7 @@ async function deleteChat(id) {
     } catch (error) {
         return 500;
     } finally {
-        client.close();
+        await client.close();
     }
 }
 

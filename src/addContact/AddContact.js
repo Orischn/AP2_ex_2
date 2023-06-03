@@ -65,7 +65,7 @@ function AddContact({ token, setLatestContact }) {
                                     <span className={`alert ${isSuccessful? "alert-success": "alert-danger"} w-50`} role="alert">
                                         {error}
                                     </span>}
-                                <button type="button" onClick={() => { addBar.current.value = '' }} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" onClick={() => { addBar.current.value = ''; setError(''); }} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary">Add Contact</button>
                             </div>
                         </form>

@@ -1,9 +1,9 @@
 const { MongoClient } = require('mongodb');
 const { getUser } = require('./users');
 const { getChat } = require('./chats');
-const client = new MongoClient("mongodb://127.0.0.1:27017");
 
 async function postMessage(message, chatId, me) {
+    const client = new MongoClient("mongodb://127.0.0.1:27017");
     try {
         const sender = await getUser(me.username);
         await client.connect();
@@ -16,11 +16,13 @@ async function postMessage(message, chatId, me) {
         await chats.updateOne(
             { id: chatId },
             {
-                $push: { messages: {
-                    $each: [{ id: chatId, created: dateTime, sender: sender, content: message.msg }],
-                    $position: 0
-                }},
-                $set: { lastMessage: { id: chatId, created: dateTime, sender: sender, content: message.msg }}
+                $push: {
+                    messages: {
+                        $each: [{ id: chatId, created: dateTime, sender: sender, content: message.msg }],
+                        $position: 0
+                    }
+                },
+                $set: { lastMessage: { id: chatId, created: dateTime, sender: sender, content: message.msg } }
             }
 
         )
@@ -29,13 +31,13 @@ async function postMessage(message, chatId, me) {
         console.log(error);
         return 500;
     } finally {
-        client.close();
+        await client.close();
     }
 }
 
-async function getMessages(chatId) {
+async function getMessages(chatId, me) {
     try {
-        const chat = await getChat(parseInt(chatId));
+        const chat = await getChat(parseInt(chatId), me);
         return chat.messages;
     } catch (error) {
         return 500;
