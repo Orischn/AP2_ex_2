@@ -1,6 +1,8 @@
 const { checkValidity, postToken } = require('../models/token');
 
 const checkToken = async (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     const status = await checkValidity(req.headers.authorization);
     if (status === 401) {
         return res.status(401).send("Invalid Token").end();
@@ -12,6 +14,8 @@ const checkToken = async (req, res, next) => {
 }
 
 const signToken = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     const token = await postToken(req.body);
     if (token === 404) {
         return res.status(token).end('Incorrect username and/or password');

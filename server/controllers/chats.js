@@ -1,8 +1,12 @@
 const { getChat, postChat, getChats, deleteChat } = require('../models/chats.js');
 const { getData } = require('../models/token');
+const { getUser } = require('../models/users.js');
 
 const addChat = async (req, res) => {
-    const me = await getData(req.headers.authorization)
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    const data = await getData(req.headers.authorization)
+    const me = await getUser(data.username);
     const chat = await postChat(req.body, me);
     if (chat === 400) {
         return res.status(400).end("No such user! :(");
@@ -17,7 +21,11 @@ const addChat = async (req, res) => {
 }
 
 const receiveChat = async (req, res) => {
-    const chat = await getChat(parseInt(req.params.id));
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    const data = await getData(req.headers.authorization)
+    const me = await getUser(data.username);
+    const chat = await getChat(parseInt(req.params.id), me, req.headers);
     if (chat === 401) {
         return res.status(401).end();
     } else if (chat === 500) {
@@ -27,7 +35,11 @@ const receiveChat = async (req, res) => {
 }
 
 const receiveChats = async (req, res) => {
-    const chats = await getChats();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    const data = await getData(req.headers.authorization)
+    const me = await getUser(data.username);
+    const chats = await getChats(me);
     if (chats === 401) {
         return res.status(401).end();
     } else if (chats === 500) {
@@ -37,6 +49,8 @@ const receiveChats = async (req, res) => {
 }
 
 const removeChat = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
     const chat = await deleteChat(parseInt(req.params.id));
     if (chat === 404) {
         return res.status(404).end();
