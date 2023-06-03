@@ -1,8 +1,16 @@
 import { useRef } from "react";
 
+
+
 function SendMyMessage({ token, contact, setLatestMessage }) {
 
+    // var socket = io();
+    
     const typeBar = useRef(null);
+
+    // socket.on('message', (message) => {
+    //     setLatestMessage(message);
+    // })
 
     const send = async function(e) {
 
@@ -24,11 +32,9 @@ function SendMyMessage({ token, contact, setLatestMessage }) {
         })
         setLatestMessage(message);
         typeBar.current.value = '';
+        // socket.emit('messageSent', message);
     }
     
-    // useEffect(() => {
-    //     typeBar.current.value = '';
-    // }, [contact])
 
     return (
         <div className="d-flex">
