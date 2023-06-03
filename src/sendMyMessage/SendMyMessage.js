@@ -1,16 +1,15 @@
 import { useRef } from "react";
-
-
+import io from 'socket.io-client'
+const socket = io.connect('http://localhost:5000');
 
 function SendMyMessage({ token, contact, setLatestMessage }) {
 
-    // var socket = io();
-    
     const typeBar = useRef(null);
 
-    // socket.on('message', (message) => {
-    //     setLatestMessage(message);
-    // })
+    socket.on('message', (message) => {
+        console.log(message);
+        setLatestMessage(message);
+    })
 
     const send = async function(e) {
 
@@ -32,7 +31,7 @@ function SendMyMessage({ token, contact, setLatestMessage }) {
         })
         setLatestMessage(message);
         typeBar.current.value = '';
-        // socket.emit('messageSent', message);
+        socket.emit('messageSent', message);
     }
     
 
