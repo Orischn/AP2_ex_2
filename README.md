@@ -4,7 +4,7 @@ In order for the project to run as it is supposed to, you should install some pa
 
 You should download the packages using the next command:
 
-npm i react react-dom react-router-dom react-scripts
+npm i react react-dom react-router-dom react-scripts express socket.io socket.io-client mongodb jsonwebtoken
 
 # running the program
 
