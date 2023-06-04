@@ -8,11 +8,13 @@ npm i react react-dom react-router-dom react-scripts
 
 # running the program
 
-In order to run the program, you should type the command 'npm start' in the project directory.
+In order to run the program, you can choose between two options:
 
-After entering this command, the first screen of the projact should be uploaded.
+- If you have your own server (that runs on http://localhost:5000) and you would like to use only our design, you should type the command 'npm start' in the project directory. After entering this command, the first screen of the projact should be uploaded. 
 
-The project will run by default on port 3000.
+The project will run by default on port 3000, while communicating with the server that runs on port 5000.
+
+- If you would like to use also our server, you should type the command 'node app.js'. Then, go to port 5000 on your local machine and the app will be presented to you.
 
 # signing up
 
@@ -58,10 +60,12 @@ The registering process will require you to fill this fields:
   
   Now, We will provide a short tutorial about what is in our program:
   - Option for adding new contacts:
-  You will be able to add contacts to your list (note that you will not be able to add unregistered contacts).
-   In order to add a new contact, just press the 'add contacts' icon on the left of the screen, and then type the name of the contact you      would like to add. And again, note that if this person is not reistered you won't be able to add him to your contacts.
+  You will be able to add contacts to your list (note that you will not be able to add unregistered contacts, and/or add the same contact twice and have with him multiple chats).
+   In order to add a new contact, just press the 'add contacts' icon on the left of the screen, and then type the name of the contact you      would like to add. And again, note that if this person is not reistered or already been added to your chats list you won't be able to add him to your chats.
+   
+   It also should be mentioned that this is not a psychedelic experience and therefore you won't be able to chat with yourself, if you would like to do that I recommend you go to a place where it is legal and then ask the local shaman for the good stuff
   
-  Once adding a new contact to your list, you will be able to send him as many messages as you want. Isn't that great?
+  Once adding a new contact to your list, you will be able to send him and receive from him as many messages as you want. Isn't that great?
   
   But wait, theres more!
   
@@ -76,11 +80,12 @@ The registering process will require you to fill this fields:
   - Searching contatcs:
   Instead of scrolling down the page to find the desired contact, you could type his name in the search bar, and voilà, the contacts with   this name will appear before your eyes.
   - Logout option:
-  If for some reason, you will feel that you had enough from our app, I would suggest that you will consider going to therapy because       clearly youre not well. But, if you do want to stop using the app, you could press on the big red button on the right corner (the one     that says 'Logout'), and you will be returned to the login page.
-  Note that at this point, the messages you sent before signing out won't be saved when you will log back in (and you will).
+  If for some reason, you will feel that you had enough from our app, I would suggest that you will consider going to therapy because       clearly youre not well. But, if you do want to stop using the app, you could press on the big red button on the right corner (it's the one     that says 'Logout'), and you will be returned to the login page.
+  
+  The messages that you sent / received and all your chats will be saved for you when you will return to use our app, and you will.
   
   Eventually, if you would like to login again you can, and basically you could do anything that you want.
-  Except maybe from killing people, or stealing, or driving drunk, or late submitting some of Hemi's targilonim (you should be ashamed if   you did, SHAME ON YOU!). Do what you like as long as its legal and dowsn't violate Geneva Convention.
+  Except maybe from killing people, or stealing, or driving drunk, or late submitting some of Hemi's targilonim (you should be ashamed if   you did, SHAME ON YOU!). Do what you like as long as its legal and doesn't violate Geneva Conventions.
   
   We hope you will enjoy using our app, and we are (not) open for any improvements that you might have. Adiós.
   
