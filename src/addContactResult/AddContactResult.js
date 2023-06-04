@@ -10,6 +10,8 @@ function AddContactResult({ selectedContact, setSelectedContact, token, latestCo
         setLatestContact(null);
     }, [latestContact, filter, selectedContact]);
 
+    
+
     const getContactsList = async (filter) => {
         const res = await fetch('http://localhost:5000/api/Chats', {
             'method': 'get',

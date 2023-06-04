@@ -55,7 +55,7 @@ function LoginPage({ setToken, setMyUsername }) {
         "password": password,
       })
     })
-    if (res.status !== 201) {
+    if (res.status !== 200) {
       res.text().then((error) => {
         setError(error);
       });

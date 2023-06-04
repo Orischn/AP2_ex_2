@@ -22,7 +22,7 @@ const signToken = async (req, res) => {
     } else if (token === 500) {
         return res.status(500).end();
     }
-    return res.status(201).end(token);
+    return res.status(200).end(token);
 }
 
 module.exports =  {

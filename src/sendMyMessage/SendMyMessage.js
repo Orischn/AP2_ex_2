@@ -7,7 +7,6 @@ function SendMyMessage({ token, contact, setLatestMessage }) {
     const typeBar = useRef(null);
 
     socket.on('message', (message) => {
-        console.log(message);
         setLatestMessage(message);
     })
 

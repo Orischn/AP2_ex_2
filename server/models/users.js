@@ -34,7 +34,7 @@ async function postUser(user) {
       displayName: user.displayName,
       profilePic: user.profilePic
     });
-    return 201;
+    return 200;
   } catch (error) {
     return 500;
   } finally {

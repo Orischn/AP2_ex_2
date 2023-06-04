@@ -7,8 +7,6 @@ const http = require('http')
 const { Server } = require('socket.io');
 const { post } = require('./routes/token');
 
-
-
 app.use(cors());
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(express.json());
@@ -25,12 +23,14 @@ const io = new Server(server, {
         methods: ['GET', 'POST', 'DELETE']
     }
 });
-let sockets = [];
 
 io.on('connection', (socket) => {
     socket.on('messageSent', (message) => {
         socket.broadcast.emit('message', message);
     })
-}) 
+    socket.on('contactAdded', (contact) => {
+        socket.broadcast.emit('contact', contact);
+    })
+})
 
 server.listen(5000);

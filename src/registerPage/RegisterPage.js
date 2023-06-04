@@ -145,7 +145,7 @@ function RegisterPage({ users, setUsers }) {
             "profilePic" : img,
             })
         })
-        if (res.status !== 201) {
+        if (res.status !== 200) {
             res.text().then((error) => {
                 setUsernameError(error);
             })
