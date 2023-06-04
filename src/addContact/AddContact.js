@@ -1,10 +1,16 @@
 import { useRef, useState } from "react";
+import io from 'socket.io-client'
+const socket = io.connect('http://localhost:5000');
 
 function AddContact({ token, setLatestContact }) {
 
     const addBar = useRef(null);
     const [error, setError] = useState('');
     const [isSuccessful, setIsSuccessful] = useState(false);
+
+    socket.on('contact', (contact) => {
+        setLatestContact(contact);
+    })
 
     const add = async function (e) {
         e.preventDefault(); // Prevent the default form submission
@@ -22,7 +28,7 @@ function AddContact({ token, setLatestContact }) {
 
         })
 
-        if (res.status !== 201) { //error
+        if (res.status !== 200) { //error
             await res.text().then((errorMessage) => {
                 setError(errorMessage);
             })
@@ -38,7 +44,7 @@ function AddContact({ token, setLatestContact }) {
             setIsSuccessful(true);
             
             addBar.current.value = ""; // Clear the input field after adding the contact
-            
+            socket.emit('contactAdded', contactIdentifier);
         }
         
     }

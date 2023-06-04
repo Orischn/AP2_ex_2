@@ -17,7 +17,7 @@ const addChat = async (req, res) => {
     } else if (chat === 500) {
         return res.status(500).end();
     }
-    return res.status(201).end(JSON.stringify(chat));
+    return res.status(200).end(JSON.stringify(chat));
 }
 
 const receiveChat = async (req, res) => {

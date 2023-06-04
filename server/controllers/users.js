@@ -8,7 +8,7 @@ const addUser = async (req, res) => {
     if (status === 409) {
         return res.status(409).end("User already exists!");
     }
-    return res.status(201).end();
+    return res.status(200).end();
 }
 
 const receiveUser = async (req, res) => {

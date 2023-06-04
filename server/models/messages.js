@@ -26,9 +26,8 @@ async function postMessage(message, chatId, me) {
             }
 
         )
-        return 201;
+        return 200;
     } catch (error) {
-        console.log(error);
         return 500;
     } finally {
         await client.close();

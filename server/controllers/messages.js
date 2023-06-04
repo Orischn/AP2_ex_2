@@ -10,7 +10,7 @@ const sendMessage = async (req, res) => {
     if (chat === 500) {
         return res.status(500).end();
     }
-    return res.status(201).end();
+    return res.status(200).end();
 }
 
 const receiveMessages = async (req, res) => {
