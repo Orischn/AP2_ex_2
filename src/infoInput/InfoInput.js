@@ -18,8 +18,13 @@ function InfoInput({ title, placeholder, value, setValue, error }) {
     function handleChange(e) {
         if (input.current.type==='file') {
             const file = e.target.files[0];
-            const imageUrl = URL.createObjectURL(file);
-            setValue(imageUrl);
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64File = e.target.result;
+                setValue(base64File);
+            }
+            reader.readAsDataURL(file);
+            // setValue(file);
             return;
         }
         setValue(e.target.value)
